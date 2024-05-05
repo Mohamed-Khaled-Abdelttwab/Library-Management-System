@@ -10,6 +10,12 @@ namespace Library_System
     {
         public string Title { get; set; }
         public string Author { get; set; }
-        public int Year { get; set; }
+        public string Type { get; set; }
+        public string Year { get; set; }
+
+        public override string ToString()
+        {
+            return $"Book Tile : {Title} , Book Author : {Author} , Book Type : {Type} , Publish Year : {Type=Year}";
+        }
     }
 }

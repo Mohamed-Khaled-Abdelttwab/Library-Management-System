@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Library_System
 {
-    internal class Librarian
+    internal class Admin:User
     {
     }
 }
