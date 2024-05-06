@@ -2,55 +2,104 @@
 {
     internal class Program
     {
+        public static string LibraryJsonFile = "C:\\Users\\El-Wattaneya\\Desktop\\Library_Managment_System\\Library_System\\Library.json";
+        public static string UsersJsonFile = "C:\\Users\\El-Wattaneya\\Desktop\\Library_Managment_System\\Library_System\\Users.json";
         static void Main(string[] args)
         {
-           Library l = new Library();
-            l.addBook(new Book() { Author = "ali ahmed", Title = "math", Type = "sciecnce", Year = "1/1/2021" });
-            l.addBook(new Book() { Author = "Mark", Title = "physics", Type = "sciecnce", Year = "12/3/2014" });
-            l.addBook(new Book() { Author = "souzan", Title = "Love", Type = "romanitc", Year = "19/12/2020" });
-            l.addBook(new Book() { Author = "Ramy", Title = "Muscle", Type = "Sports", Year = "9/9/2017" });
-            l.addBook(new Book() { Author = "Ramy", Title = "Football", Type = "Sports", Year = "19/1/2018" });
-            l.addBook(new Book() { Author = "Hamza", Title = "Football", Type = "Sports", Year = "20/8/2015" });
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Welcome to our Library Managment System :");
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("As a User , Here is your Valid Activities in out System :");
+             Library l = new Library();
+            l.DeserializeFromJson(LibraryJsonFile);
+            UserAuthenticator userAuthenticator = new UserAuthenticator();
+            userAuthenticator.DeserializeFromJson(UsersJsonFile);
+            foreach (var us in userAuthenticator.users)
+            {
+                Console.WriteLine(us.Name + " " + us.Email);
+            }
+            Console.WriteLine("You are Signing In Now ");
+
+            Console.Write("Please enter your name : ");
+            string name = Console.ReadLine();
             Console.WriteLine();
+
+            Console.Write("Please enter your Email : ");
+            string Email = Console.ReadLine();
+            if (userAuthenticator.SetEmail(Email))
+            {
+                if (userAuthenticator.CheckEmailIsExist(Email) == true)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("This Email Already Exist");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    return;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("This is valid Email ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("This is invalid Email ");
+                Console.ForegroundColor = ConsoleColor.White;
+                return;
+            }
+
+
+            Console.WriteLine();
+            Console.Write("Please enter your Password : ");
+            string Password = Console.ReadLine();
+            LibraryUser user = new LibraryUser(name, Email, Password, l);
+            userAuthenticator.Signup(user);
+            Console.WriteLine();
+            Console.WriteLine("----------------------------------------------------");
+            Console.WriteLine();
+
             while (true)
             {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Welcome to our Library Managment System :");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("As a User , Here is your Valid Activities in out System :");
+                Console.WriteLine();
                 Console.WriteLine("1- Display all Books ");
                 Console.WriteLine("2- Display all Authors ");
-                Console.WriteLine("3- Displat all Types");
+                Console.WriteLine("3- Display all Types");
                 Console.WriteLine("4- Choose a book");
                 Console.WriteLine("5- Search for a book");
+                Console.WriteLine("6- Display your Borrowed Books list");
+
                 Console.WriteLine();
 
                 Console.WriteLine("Enter Your Choice :");
-                int num =  Convert.ToInt32(Console.ReadLine());
+                int num = Convert.ToInt32(Console.ReadLine());
 
-                if(num == 4)
+                if (num == 4)
                 {
-                    l.DisplayAllBooks();
-                    Console.WriteLine();
-                    Console.Write("Please Enter the book name you want: ");
-                    string name = Console.ReadLine();
-                    Book book = l.GetBookByTitle(name);
-                    if (book != null)
+                    if (l.IfBooksExist())
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine("your Book Details is :");
+                        Console.WriteLine("The Library Book List :");
+                        Console.WriteLine();
                         Console.ForegroundColor = ConsoleColor.White;
-                        Console.WriteLine(book);
+                        l.DisplayAllBooks();
+                        Console.Write("Please Enter The book you want : ");
+                        string bookname = Console.ReadLine();
+                        l.SubscrbeToEvent(user);
+                        user.ChooseBook(bookname);
+
                     }
                     else
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("This Book Doesn't Exist");
+                        Console.WriteLine("Sorry There is no Books Available Right Now");
                         Console.ForegroundColor = ConsoleColor.White;
-                       
                     }
+
+
                 }
-                else if(num == 5)
+                else if (num == 5)
                 {
                     Console.Write("Enter The Book name You Search For :");
                     string title = Console.ReadLine();
@@ -67,8 +116,12 @@
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("This Book Doesn't Exist");
                         Console.ForegroundColor = ConsoleColor.White;
-                        
+
                     }
+                }
+                else if (num == 6)
+                {
+                    user.PrintBorrowedBooks();
                 }
 
                 Console.WriteLine("Do you want to return back to Menu ?");
@@ -79,15 +132,20 @@
                 {
                     Console.WriteLine("----------------------------------------");
                     Console.WriteLine();
+                    Console.Clear();
                     continue;
                 }
                 else
                 {
+
                     break;
                 }
 
 
             }
+            l.SerializeToJson(LibraryJsonFile);
+            userAuthenticator.SerializeToJson(UsersJsonFile);
+
 
 
 

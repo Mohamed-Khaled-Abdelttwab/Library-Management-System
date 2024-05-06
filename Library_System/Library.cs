@@ -3,16 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Reflection.Metadata.BlobBuilder;
+using System.Xml;
+using Newtonsoft.Json;
 
 namespace Library_System
 {
-    internal class Library
+    public class Library
     {
         private List<Book> books = new List<Book>();
 
         public void addBook(Book book)
         {
             books.Add(book);
+        }
+        public bool IfBooksExist()
+        {
+            return books.Count > 0;
+        }
+        public void SerializeToJson(string filePath)
+        {
+            string json = JsonConvert.SerializeObject(books, Newtonsoft.Json.Formatting.Indented);
+            File.WriteAllText(filePath, json);
+        }
+        public void DeserializeFromJson(string filePath)
+        {
+            if (File.Exists(filePath))
+            {
+                string json = File.ReadAllText(filePath);
+                books = JsonConvert.DeserializeObject<List<Book>>(json);
+            }
         }
         public void DisplayAllBooks()
         {
@@ -212,5 +232,20 @@ namespace Library_System
             return resultBook;
         }
 
+        public void SubscrbeToEvent(LibraryUser user)
+        {
+            user.onBookChoosen += User_onBookChoosen;
+        }
+
+        private void User_onBookChoosen(Book book)
+        {
+           if(books.Contains(book))
+            {
+                books.Remove(book);
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Your book added to your borrowed List");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+        }
     }
 }

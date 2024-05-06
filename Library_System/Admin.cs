@@ -8,5 +8,6 @@ namespace Library_System
 {
     internal class Admin:User
     {
+
     }
 }
