@@ -17,6 +17,31 @@ namespace Library_System
         {
             books.Add(book);
         }
+        public bool RemoveBook(string title, string author)
+        {
+            if(books.Count == 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("There is no Books in the Library Right now !!");
+                Console.ForegroundColor = ConsoleColor.White;
+                return false;
+            }
+            else
+            {
+                foreach(Book book in books)
+                {
+                    if(book.Title == title && book.Author==author) 
+                    {
+                        books.Remove(book);
+                        return true;
+                    }
+                }
+            }
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("This Book Doesn't Exist");
+            Console.ForegroundColor = ConsoleColor.White;
+            return false;
+        }
         public bool IfBooksExist()
         {
             return books.Count > 0;
@@ -244,6 +269,22 @@ namespace Library_System
                 books.Remove(book);
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Your book added to your borrowed List");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+        }
+        public void RetrieveBook(Book book)
+        {
+            try
+            {
+                books.Add(book);
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Proccess Pass Successfully !!");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            catch 
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Invalid Book");
                 Console.ForegroundColor = ConsoleColor.White;
             }
         }

@@ -1,53 +1,77 @@
 [
   {
+    "borrowedBooks": [],
+    "Name": "ali",
+    "Email": "ali@gmail.com",
+    "Password": "12345"
+  },
+  {
     "borrowedBooks": [
       {
-        "Title": "book1",
-        "Author": "author1",
-        "Type": "type1",
+        "Title": "book4",
+        "Author": "author4",
+        "Type": "2020",
+        "Year": "2020"
+      }
+    ],
+    "Name": "Reem",
+    "Email": "reem@gmail.com",
+    "Password": "reem1234"
+  },
+  {
+    "borrowedBooks": [],
+    "Name": "Ziad",
+    "Email": "Ziad@gmail.com",
+    "Password": "ziad12345"
+  },
+  {
+    "borrowedBooks": [],
+    "Name": "Ramy",
+    "Email": "ramy@gmail.com",
+    "Password": "12345"
+  },
+  {
+    "borrowedBooks": [
+      {
+        "Title": "book6",
+        "Author": "author6",
+        "Type": "2020",
         "Year": "2020"
       }
     ],
     "Name": "Mohamed",
-    "Email": "mohamed@gmail.com",
-    "Password": "mohamed1234"
-  },
-  {
-    "borrowedBooks": [
-      {
-        "Title": "book2",
-        "Author": "author2",
-        "Type": "type2",
-        "Year": "2020"
-      },
-      {
-        "Title": "book3",
-        "Author": "author3",
-        "Type": "type3",
-        "Year": "2020"
-      }
-    ],
-    "Name": "Ahmed",
-    "Email": "ahmed@gmail.com",
+    "Email": "mohamed12@gmail.com",
     "Password": "12345"
   },
   {
     "borrowedBooks": [
       {
-        "Title": "book5",
-        "Author": "author5",
-        "Type": "type5",
-        "Year": "2020"
-      },
-      {
-        "Title": "book7",
-        "Author": "author7",
-        "Type": "type7",
-        "Year": "2020"
+        "Title": "sport",
+        "Author": "kareem",
+        "Type": "sports",
+        "Year": "2/2/2022"
       }
     ],
-    "Name": "ali",
-    "Email": "ali@gmail.com",
+    "Name": "alaa",
+    "Email": "alaa@gmail.com",
     "Password": "12345"
+  },
+  {
+    "borrowedBooks": [],
+    "Name": "osman",
+    "Email": "osman@gmail.cpm",
+    "Password": "12343"
+  },
+  {
+    "borrowedBooks": [],
+    "Name": "kamal",
+    "Email": "kamal@gmail.com",
+    "Password": "12435"
+  },
+  {
+    "borrowedBooks": [],
+    "Name": "fdgh",
+    "Email": "dfsf@fgh.sdfg",
+    "Password": "weyy"
   }
 ]

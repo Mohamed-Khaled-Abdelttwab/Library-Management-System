@@ -10,18 +10,7 @@ namespace Library_System
 {
     public class UserAuthenticator : Authentication
     {
-        public List<LibraryUser> users = new List<LibraryUser>();
-        public UserAuthenticator(string name , string password, string email)
-        {
-            this.Name = name;
-            this.Password = password;
-            this.Email = email;
-
-        }
-        public UserAuthenticator()
-        {
-           
-        }
+        public static List<LibraryUser> users = new List<LibraryUser>();
         public bool CheckEmailIsExist(string email)
         {
              foreach (var user in users)
@@ -38,19 +27,19 @@ namespace Library_System
            
         }
 
-        //public LibraryUser Login(string username, string password)
-        //{
-        //    if (!users.ContainsKey(username))
-        //    {
-        //        throw new ArgumentException("Invalid username.");
-        //    }
-        //    LibraryUser user = users[username];
-        //    if (user.Password != password)
-        //    {
-        //        throw new ArgumentException("Invalid password.");
-        //    }
-        //    return user;
-        //}
+        public LibraryUser Login(string email, string password)
+        {
+            LibraryUser libraryUser = null;
+            foreach(var user in users)
+            {
+                if(string.Equals(user.Email , email, StringComparison.Ordinal) && string.Equals(user.Password, password, StringComparison.Ordinal))
+                {
+                    libraryUser = user;
+                    break;
+                }
+            }
+            return libraryUser;
+        }
 
         public void SerializeToJson(string filePath)
         {

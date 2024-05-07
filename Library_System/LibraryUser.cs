@@ -15,22 +15,22 @@ namespace Library_System
         public List<Book> borrowedBooks = new List<Book>();
         private Library Library;
         public event BookChoosen onBookChoosen;
-        public LibraryUser(Library library)
-        {
-            this.Library = library;
-        }
-        public LibraryUser(string name , string email , string password, Library library)
+
+        public LibraryUser(string name , string email , string password)
         {
             this.Name = name;
             this.Email = email;
             this.Password = password;
-            this.Library = library;
         }
         public LibraryUser()
         {
             
         }
-        public void PrintBorrowedBooks()
+        public void EnterTheLibrary(Library library)
+        {
+            this.Library = library;
+        }
+        public bool PrintBorrowedBooks()
         {
             if (borrowedBooks.Count > 0)
             {
@@ -42,6 +42,7 @@ namespace Library_System
                 {
                     Console.WriteLine(book.Title+" by "+book.Author);
                 }
+                return true;
             }
             else
             {
@@ -50,6 +51,7 @@ namespace Library_System
                 Console.WriteLine("You Don't Have Borrowed Books !!");
                 Console.ForegroundColor = ConsoleColor.White;
             }
+            return false;
             
         }
         public void AddBookToBorrowedList(Book book)
@@ -82,8 +84,55 @@ namespace Library_System
                 }
             
         }
+        public void RetriveBook(string bookname)
+        {
+                Book resultBook = new Book();
+                int count = 0;
+                foreach (var book in borrowedBooks)
+                {
+                    if (book.Title == bookname)
+                    {
+                        resultBook = book;
+                        count++;
+                    }
+                }
+                if (count > 1)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("There is Dublicated Book name , please Enter The Author Name : ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    string author = Console.ReadLine();
+                    foreach (var book in borrowedBooks)
+                    {
+                        if (book.Title == bookname && book.Author==author)
+                        {
+                            resultBook = book;
+                            break;
+                        }
+                    }
+                Library.RetrieveBook(resultBook);
+                borrowedBooks.Remove(resultBook);
+                    
+                }
+                else if(count ==0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("This Book is not in your borrowed books  !!");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+            else
+            {
+                Library.RetrieveBook(resultBook);
+                borrowedBooks.Remove(resultBook);
+               
+            }
+            
+        }
 
-
+        public override string ToString()
+        {
+            return $"User Name : {Name} , Email : {Email} , Password {Password}";
+        }
 
 
     }
